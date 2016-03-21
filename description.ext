@@ -1,0 +1,92 @@
+Respawn = "BASE";
+RespawnDelay = 15;//This is based on ACRE mute/unmute timer + it`s smooth with ALiVE spawning system
+respawnDialog = 1;
+respawnTemplates[] = {"Base","Counter"};//MenuPosition,Wave,Counter,Base
+respawnOnStart = 0;//1
+respawnButton = 1;//Mainly ignored: Respawn button in the pause menu is automatically now enabled for INSTANT, BASE, GROUP and SIDE respawn types.
+
+joinUnassigned = 1;//disabled automatic slot assigment
+allowFunctionsLog = 1;//true
+briefing = 0;
+debriefing=1;
+disabledAI = 1;
+disableChannels[]= {0,1,6}; //disabled chat channels per request by Highroller
+OnLoadName = "[RG] CQB Killhouse";
+author = "[RG] aBrat";
+onLoadMission= "“People tell me I saved hundreds and hundreds of people. But I have to tell you: It’s not the people you saved that you remember. It’s the ones you couldn’t save.”—Navy SEAL Chris Kyle, American Sniper";
+overviewTextLocked= "Mission is locked";
+OnLoadMissionTime = FALSE;
+overviewPicture = "images\mission.paa";
+loadScreen ="images\mission.paa";
+showCompass = 1;
+showGPS = 1;
+showWatch = 1;
+enableDebugConsole = 1;//0=none,1=Only for adming logged,2=Everyone
+saving = 0;//disable saving, is this deprecated???
+
+//This is good to be enabled for debugging but disabled by default
+allowFunctionsRecompile = 0;
+
+//New corpse/wreck removal settings
+//these work pretty fine only problem is that the wrecks doesnt include ammoboxes, fix for that is implemented in the initServer.sqf
+corpseManagerMode = 1;//0 = None,1 = All,2 = None_But_Respawned,3 = All_But_Respawned
+corpseLimit = 20;//default 15;
+corpseRemovalMinTime = 600;//default 10;
+corpseRemovalMaxTime = 1200;//default 3600;
+wreckManagerMode = 1;//0 = None,1 = All,2 = None_But_Respawned,3 = All_But_Respawned
+wreckLimit = 15;//default 15;
+wreckRemovalMinTime = 600;//default 10;
+wreckRemovalMaxTime = 3600;//default 3600; set for 4 hours
+
+//New setting for the Helicopters DLC, Talon 1 decision is to use value 0 not forcing anything
+forceRotorLibSimulation = 0; //0 - options based; 1 - force enable; 2 - force disable
+
+class Header
+{
+    gameType = COOP; //game type
+    minPlayers=1;
+    maxPlayers=36; //will cause error if not right
+};
+
+//Functions library
+class CfgFunctions {
+    class RG {
+        class RG {
+            file = "functions";
+            class trackerDrawMap;
+            class groupID;
+            class Para_Cond;
+            class Para_Deploy;
+            class MinesNear;
+            class MineDetector;
+            class MineDrawIcon3D;
+        };
+    };
+};
+
+//CBA Extended init eventhandlers per typeof
+class Extended_Init_EventHandlers {
+    class Helicopter {
+        init = "_this execVM ""scripts\XEH_Init\Helicopter.sqf"";";
+    };
+    class Plane {
+        init = "_this execVM ""scripts\XEH_Init\Plane.sqf"";";
+    };
+};
+
+//Sounds needed by the rear door script
+class CfgSounds {
+    sounds[] = {};
+
+    class alarm_attention {
+        name = "alarm_attention";
+        sound[] = {"scripts\usableCargoRamp\sounds\alarm-attention.ogg", 1, 1};
+        titles[] = {0, ""};
+	};
+class CfgMusic { 
+	tracks[]={}; 
+		class music1
+		{ name = ""; sound[] = {\music\ArmA.ogg, db+1, 1.0}; 
+		}; 
+	};
+};
